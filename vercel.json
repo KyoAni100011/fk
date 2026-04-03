@@ -6,11 +6,8 @@
       "use": "@vercel/node"
     },
     {
-      "src": "web/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
   ],
   "rewrites": [
@@ -19,12 +16,8 @@
       "destination": "/api/src/index.ts"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/web/assets/$1"
-    },
-    {
       "source": "/(.*)",
-      "destination": "/web/index.html"
+      "destination": "/index.html"
     }
   ]
 }
