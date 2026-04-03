@@ -2,7 +2,7 @@
   "name": "papana-root",
   "version": "1.0.0",
   "scripts": {
-    "build": "npm install --prefix api && npm install --prefix web && npm run build --prefix web",
+    "build": "npm install --prefix api --legacy-peer-deps && npm install --prefix web --legacy-peer-deps && npm run build --prefix web",
     "start": "npm run start --prefix api"
   }
 }
