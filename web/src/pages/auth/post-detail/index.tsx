@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import DOMPurify from "dompurify";
 import { formatDistanceToNow } from "date-fns";
+import { Avatar } from "../../../core/components/ui/Avatar";
 import { useAuth } from "../../../core/AuthProvider";
 import { getPost, deletePost } from "../../../core/services/post";
 import { toggleLike } from "../../../core/services/like";
@@ -163,9 +164,7 @@ export const PostDetail = () => {
     return commentList.map(c => (
       <div key={c.id} className="mt-3 w-full">
         <div className="flex gap-2">
-          <div className="w-8 h-8 border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-xs shrink-0 mt-1">
-            {c.user.username.charAt(0).toUpperCase()}
-          </div>
+          <Avatar fallback={c.user.username} src={c.user.avatarUrl} className="mt-1" />
           <div className="flex-1">
             <div className="bg-white border border-[#333333] px-3 py-2 inline-block">
               <span className="font-bold text-black text-sm mr-2">{c.user.username}</span>
@@ -199,9 +198,7 @@ export const PostDetail = () => {
         <div className="p-4 md:p-5">
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-base">
-                {post.user.username.charAt(0).toUpperCase()}
-              </div>
+              <Avatar fallback={post.user.username} src={post.user.avatarUrl} className="w-10 h-10 text-base" />
               <div>
                 <h3 className="font-bold text-black text-sm leading-tight">{post.user.username}</h3>
                 <p className="text-xs text-black opacity-70 hover:underline cursor-pointer">
@@ -269,9 +266,7 @@ export const PostDetail = () => {
           )}
           
           <form onSubmit={handleComment} className="flex gap-3 items-start">
-            <div className="w-8 h-8 border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-xs shrink-0">
-              {user?.username?.charAt(0).toUpperCase()}
-            </div>
+            <Avatar fallback={user?.username || "?"} src={user?.avatarUrl} />
             <div className="flex-1 flex gap-2">
               <input 
                 id="commentInput"

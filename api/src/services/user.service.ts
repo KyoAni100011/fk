@@ -7,12 +7,17 @@ export class UserService {
   async getCurrentUser(id: string) {
     const user = await this.userRepo.findById(id);
     if (!user) return { error: "User not found", status: 404 };
-    return { data: { id: user.id, username: user.username } };
+    return { data: { id: user.id, username: user.username, avatarUrl: user.avatarUrl } };
   }
 
   async updateUsername(id: string, username: string) {
     const user = await this.userRepo.update(id, { username });
-    return { data: { id: user.id, username: user.username } };
+    return { data: { id: user.id, username: user.username, avatarUrl: user.avatarUrl } };
+  }
+
+  async updateAvatar(id: string, avatarUrl: string) {
+    const user = await this.userRepo.update(id, { avatarUrl });
+    return { data: { id: user.id, username: user.username, avatarUrl: user.avatarUrl } };
   }
 
   async updatePassword(id: string, oldPassword: string, newPassword: string) {

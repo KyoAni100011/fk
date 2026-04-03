@@ -12,6 +12,7 @@ import { serialize } from "cookie";
 export interface User {
   id: string;
   username: string;
+  avatarUrl?: string;
 }
 
 interface AuthContextType {

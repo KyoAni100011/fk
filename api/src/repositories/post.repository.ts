@@ -5,7 +5,7 @@ export class PostRepository {
   async create(data: Prisma.PostUncheckedCreateInput) {
     return prisma.post.create({
       data,
-      include: { user: { select: { id: true, username: true } } },
+      include: { user: { select: { id: true, username: true, avatarUrl: true } } },
     });
   }
 
@@ -16,7 +16,7 @@ export class PostRepository {
       take,
       orderBy: { createdAt: "desc" },
       include: {
-        user: { select: { id: true, username: true } },
+        user: { select: { id: true, username: true, avatarUrl: true } },
         _count: { select: { likes: true, comments: true } },
       },
     });
@@ -26,8 +26,8 @@ export class PostRepository {
     return prisma.post.findUnique({
       where: { id },
       include: {
-        user: { select: { id: true, username: true } },
-        _count: { select: { likes: true, comments: true } }, // Changed spacing
+        user: { select: { id: true, username: true, avatarUrl: true } },
+        _count: { select: { likes: true, comments: true } }, 
       },
     });
   }

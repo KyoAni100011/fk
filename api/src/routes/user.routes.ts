@@ -13,5 +13,6 @@ const userController = new UserController(userService);
 router.get("/", isAuthenticated, userController.getCurrentUser);
 router.put("/username", isAuthenticated, userController.updateUsername);
 router.put("/password", isAuthenticated, userController.updatePassword);
+router.put("/avatar", isAuthenticated, userController.updateAvatar);
 
 export default router;

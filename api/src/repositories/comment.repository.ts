@@ -9,7 +9,7 @@ export class CommentRepository {
         postId,
         parentId,
       },
-      include: { user: { select: { id: true, username: true } } },
+      include: { user: { select: { id: true, username: true, avatarUrl: true } } },
     });
   }
 
@@ -24,7 +24,7 @@ export class CommentRepository {
   async findCommentsByPostId(postId: string) {
     return prisma.comment.findMany({
       where: { postId },
-      include: { user: { select: { id: true, username: true } } },
+      include: { user: { select: { id: true, username: true, avatarUrl: true } } },
       orderBy: { createdAt: "asc" },
     });
   }

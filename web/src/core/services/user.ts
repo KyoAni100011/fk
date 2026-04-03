@@ -15,3 +15,8 @@ export const updatePassword = async (oldPassword: string, newPassword: string) =
   const result = await api.put(`${USER_API_BASE_URL}/password`, { oldPassword, newPassword });
   return result.data;
 };
+
+export const updateAvatar = async (avatarUrl: string) => {
+  const result = await api.put(`${USER_API_BASE_URL}/avatar`, { avatarUrl });
+  return result.data;
+};

@@ -44,6 +44,24 @@ export class UserController {
     }
   };
 
+  updateAvatar = async (req: Request, res: Response) => {
+    try {
+      const { avatarUrl } = req.body;
+      const userId = req.session.userId;
+
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      if (!avatarUrl || typeof avatarUrl !== 'string') return res.status(400).json({ message: "Invalid avatarUrl" });
+
+      const result = await this.userService.updateAvatar(userId, avatarUrl);
+      if ("error" in result) return res.status((result as any).status || 500).json({ message: (result as any).error });
+
+      res.json((result as any).data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+
   updatePassword = async (req: Request, res: Response) => {
     try {
       const { oldPassword, newPassword } = updatePasswordSchema.parse(req.body);

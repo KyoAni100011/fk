@@ -62,7 +62,7 @@ export const Home = () => {
         className="p-3 flex gap-3 items-center cursor-pointer hover:bg-[#f9f9f9] transition"
         onClick={() => navigate("/create-post")}
       >
-        <Avatar fallback={user?.username || "?"} />
+        <Avatar fallback={user?.username || "?"} src={user?.avatarUrl} />
         <div className="flex-1 bg-white border border-[#333333] py-1.5 px-3 text-black text-sm hover:bg-[#f0f0f0] transition">
           What's on your mind, {user?.username}?
         </div>
@@ -73,7 +73,7 @@ export const Home = () => {
           <Card key={post.id}>
             <div className="p-4">
               <div className="flex items-center gap-3 mb-3">
-                <Avatar fallback={post.user.username} />
+                <Avatar fallback={post.user.username} src={post.user.avatarUrl} />
                 <div>
                   <h3 className="font-bold text-black text-sm leading-tight">{post.user.username}</h3>
                   <p className="text-xs text-black hover:underline cursor-pointer opacity-70">

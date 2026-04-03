@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { formatDistanceToNow } from "date-fns";
 import DOMPurify from "dompurify";
 import { useAuth } from "../../../core/AuthProvider";
+import { Avatar } from "../../../core/components/ui/Avatar";
 import { getPosts } from "../../../core/services/post";
 import { toggleLike } from "../../../core/services/like";
 import { useAlert } from "../../../core/AlertContext";
@@ -59,9 +60,7 @@ export const Profile = () => {
         <div className="flex justify-between items-start">
           {/* Avatar overlapping the cover */}
           <div className="w-24 h-24 md:w-32 md:h-32 border-[4px] border-white bg-white -mt-12 md:-mt-16 z-10 relative">
-            <div className="w-full h-full border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-4xl md:text-5xl shadow-[4px_4px_0_0_#333333]">
-              {user.username.charAt(0).toUpperCase()}
-            </div>
+            <Avatar fallback={user.username} src={user.avatarUrl} className="w-full h-full text-4xl md:text-5xl border-none shadow-[4px_4px_0_0_#333333]" />
           </div>
           
           <div className="mt-4">
@@ -120,9 +119,7 @@ export const Profile = () => {
               <div key={post.id} className="bg-white border border-[#333333]">
                 <div className="p-4">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-xs">
-                      {post.user.username.charAt(0).toUpperCase()}
-                    </div>
+                    <Avatar fallback={post.user.username} src={post.user.avatarUrl} />
                     <div>
                       <h3 className="font-bold text-black text-sm leading-tight">{post.user.username}</h3>
                       <p className="text-xs text-black hover:underline cursor-pointer opacity-70">

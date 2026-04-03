@@ -6,7 +6,7 @@ import { useSettingsForm } from "../hooks/useSettingsForm";
 import { TabsContent } from "../../../core/components/ui/Tabs";
 
 export const SettingsPane = () => {
-  const { formData, updateField, submitGeneralSettings, submitSecuritySettings, loading, user } = useSettingsForm();
+  const { formData, updateField, submitGeneralSettings, submitSecuritySettings, loading, user, isUploadingAvatar, handleAvatarUpload } = useSettingsForm();
 
   return (
     <Card className="flex-1 p-6 md:p-8">
@@ -14,6 +14,32 @@ export const SettingsPane = () => {
         <h3 className="text-xl font-bold text-black mb-2">General Account Settings</h3>
         <p className="text-sm text-black opacity-70 mb-6">Manage your basic profile information.</p>
         
+        <div className="mb-8 flex items-center gap-6">
+          <div className="relative group w-20 h-20 shrink-0">
+            {user?.avatarUrl ? (
+              <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover border border-[#333333] bg-[#f0f0f0]" />
+            ) : (
+              <div className="w-full h-full border border-[#333333] bg-[#f0f0f0] flex items-center justify-center font-bold text-black text-2xl">
+                {user?.username?.charAt(0).toUpperCase()}
+              </div>
+            )}
+            {loading || isUploadingAvatar ? (
+               <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+                  <span className="w-6 h-6 border-2 border-[#333333] border-t-transparent rounded-full animate-spin"></span>
+               </div>
+            ) : (
+              <label className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer text-white font-bold text-xs cursor-pointer">
+                EDIT
+                <input type="file" className="hidden" accept="image/*" onChange={handleAvatarUpload} disabled={isUploadingAvatar} />
+              </label>
+            )}
+          </div>
+          <div className="text-sm text-black">
+            <h4 className="font-bold">Profile Picture</h4>
+            <p className="opacity-70 mt-1 max-w-xs">Upload a new avatar. Recommended size is 256x256px.</p>
+          </div>
+        </div>
+
         <form onSubmit={submitGeneralSettings} className="max-w-md">
           <div className="mb-5">
             <Label htmlFor="username" text="Username" />
