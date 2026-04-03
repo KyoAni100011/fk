@@ -9,9 +9,11 @@ import userRoutes from "./routes/user.routes.js";
 import postRoutes from "./routes/post.routes.js";
 import likeRoutes from "./routes/like.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
+import uploadRoutes from "./routes/upload.routes.js";
 import cors from "cors";
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 // Trust proxy for secure cookies on Vercel
@@ -72,6 +74,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // Health check
 app.get("/health", (req, res) => {
