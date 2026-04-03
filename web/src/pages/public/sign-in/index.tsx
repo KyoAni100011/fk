@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { Button } from "../../../core/components/ui/Button";
 import { Form, FormField } from "../../../core/components/form-field";
@@ -7,14 +8,18 @@ import { useAuth } from "../../../core/AuthProvider";
 export const SignIn = () => {
   const { login } = useAuth();
 
-  const handleSubmit = ({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async ({
     email,
     password,
   }: {
     email: string;
     password: string;
   }) => {
-    login(email, password);
+    setIsSubmitting(true);
+    await login(email, password);
+    setIsSubmitting(false);
   };
 
   return (
@@ -39,7 +44,9 @@ export const SignIn = () => {
           </Link>
         </div>
         <div className="text-right mb-3">
-          <Button type="submit" className="w-full">Sign in</Button>
+          <Button type="submit" isLoading={isSubmitting} className="w-full">
+            {isSubmitting ? "Signing in..." : "Sign in"}
+          </Button>
         </div>
         <div className="text-xs text-center">
           <p className="inline-block mr-1">Don't have account?</p>

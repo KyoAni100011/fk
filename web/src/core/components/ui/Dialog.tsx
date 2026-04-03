@@ -21,7 +21,8 @@ export const Dialog = ({
   confirmText = "Confirm",
   cancelText = "Cancel",
   variant = "default",
-}: DialogProps) => {
+  isLoading = false,
+}: DialogProps & { isLoading?: boolean }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col gap-4">
@@ -33,16 +34,14 @@ export const Dialog = ({
         </div>
         
         <div className="flex justify-end gap-3 mt-4">
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="secondary" onClick={onClose} disabled={isLoading}>
             {cancelText}
           </Button>
           {onConfirm && (
             <Button 
               variant={variant === "danger" ? "danger" : "primary"} 
-              onClick={() => {
-                onConfirm();
-                onClose();
-              }}
+              onClick={onConfirm}
+              isLoading={isLoading}
             >
               {confirmText}
             </Button>

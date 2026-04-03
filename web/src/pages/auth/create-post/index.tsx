@@ -4,6 +4,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { createPost } from "../../../core/services/post";
 import { useAlert } from "../../../core/AlertContext";
+import { Button } from "../../../core/components/ui/Button";
 
 export const CreatePost = () => {
   const navigate = useNavigate();
@@ -72,13 +73,13 @@ export const CreatePost = () => {
         </div>
         
         <div className="mt-8 flex justify-end">
-          <button 
+          <Button 
             type="submit" 
             disabled={loading || !title.trim() || !content.trim()}
-            className="bg-[#f0f0f0] border border-[#333333] text-black hover:bg-[#e0e0e0] font-bold py-1.5 px-6 disabled:opacity-50 transition text-sm"
+            isLoading={loading}
           >
             {loading ? "Posting..." : "Post"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

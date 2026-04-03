@@ -29,7 +29,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(baseClass, variants[variant], sizes[size], className)}
         {...props}
       >
-        {isLoading && <span className="mr-2 animate-spin">⟳</span>}
+        {isLoading && (
+          <span className="mr-2 w-3.5 h-3.5 border-2 border-current border-t-transparent animate-spin block"></span>
+        )}
         {children}
       </button>
     );

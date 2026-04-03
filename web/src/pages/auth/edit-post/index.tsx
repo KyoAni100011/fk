@@ -6,6 +6,7 @@ import { getPost, updatePost } from "../../../core/services/post";
 import { useAuth } from "../../../core/AuthProvider";
 import { useAlert } from "../../../core/AlertContext";
 import { Loader } from "../../../core/components/ui/Loader";
+import { Button } from "../../../core/components/ui/Button";
 
 export const EditPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -103,13 +104,13 @@ export const EditPost = () => {
         </div>
         
         <div className="mt-8 flex justify-end">
-          <button 
+          <Button 
             type="submit" 
             disabled={loading || !title.trim() || !content.trim()}
-            className="bg-[#f0f0f0] border border-[#333333] text-black hover:bg-[#e0e0e0] font-bold py-1.5 px-6 disabled:opacity-50 transition text-sm cursor-pointer"
+            isLoading={loading}
           >
             {loading ? "Updating..." : "Update Post"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

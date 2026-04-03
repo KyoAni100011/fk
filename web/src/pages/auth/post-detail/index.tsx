@@ -8,6 +8,7 @@ import { toggleLike } from "../../../core/services/like";
 import { getComments, addComment, deleteComment as delComment } from "../../../core/services/comment";
 import { useAlert } from "../../../core/AlertContext";
 import { Dialog } from "../../../core/components/ui/Dialog";
+import { Button } from "../../../core/components/ui/Button";
 
 const PostDetailSkeleton = () => (
   <div className="w-full max-w-2xl mx-auto pb-10">
@@ -75,6 +76,9 @@ export const PostDetail = () => {
   const [commentContent, setCommentContent] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState<string | null>(null);
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [isDeletingPost, setIsDeletingPost] = useState(false);
+  const [isDeletingComment, setIsDeletingComment] = useState(false);
 
   const fetchPostAndComments = async () => {
     if (!id) return;
@@ -111,35 +115,44 @@ export const PostDetail = () => {
   const handleComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!id || !commentContent.trim()) return;
+    setIsSubmittingComment(true);
     try {
       await addComment(id, commentContent, replyTo?.id);
       setCommentContent("");
       setReplyTo(null);
-      fetchPostAndComments();
+      await fetchPostAndComments();
     } catch {
       showAlert("Failed to post comment", "Error", "danger");
+    } finally {
+      setIsSubmittingComment(false);
     }
   };
 
   const handleDeletePost = async () => {
     if (!id) return;
+    setIsDeletingPost(true);
     try {
       await deletePost(id);
       setShowDeleteModal(false);
       navigate("/");
     } catch {
       showAlert("Failed to delete", "Error", "danger");
+    } finally {
+      setIsDeletingPost(false);
     }
   };
 
   const handleDeleteComment = async () => {
     if (!commentToDelete) return;
+    setIsDeletingComment(true);
     try {
       await delComment(commentToDelete);
       setCommentToDelete(null);
-      fetchPostAndComments();
+      await fetchPostAndComments();
     } catch {
       showAlert("Failed to delete comment", "Error", "danger");
+    } finally {
+      setIsDeletingComment(false);
     }
   };
 
@@ -268,13 +281,13 @@ export const PostDetail = () => {
                 placeholder="Write a comment..."
                 className="w-full bg-white border border-[#333333] py-2 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#333333]"
               />
-              <button 
+              <Button 
                 type="submit" 
-                disabled={!commentContent.trim()}
-                className="px-4 bg-[#f0f0f0] border border-[#333333] hover:bg-[#e0e0e0] disabled:opacity-50 text-black text-sm font-bold transition"
+                disabled={!commentContent.trim() || isSubmittingComment}
+                isLoading={isSubmittingComment}
               >
                 Post
-              </button>
+              </Button>
             </div>
           </form>
           
@@ -295,6 +308,7 @@ export const PostDetail = () => {
         confirmText="Yes"
         cancelText="No"
         variant="danger"
+        isLoading={isDeletingPost}
       />
 
       <Dialog 
@@ -306,6 +320,7 @@ export const PostDetail = () => {
         confirmText="Yes"
         cancelText="No"
         variant="danger"
+        isLoading={isDeletingComment}
       />
     </div>
   );
