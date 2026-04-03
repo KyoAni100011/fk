@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  username  String
+  email     String    @unique
+  password  String
+  role      String    @default("user")
+  status    String    @default("active")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sessions  Session[]
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+}
+model Session {
+  id        String   @id @default(cuid())
+  sid       String   @unique
+  data      String   @db.MediumText
+  expiresAt DateTime
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PasswordResetCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  title     String
+  content   String    @db.Text
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  likes     Like[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+model Comment {
+  id        String    @id @default(uuid())
+  content   String    @db.Text
+  userId    String
+  postId    String
+  parentId  String?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([postId])
+  @@index([parentId])
+  @@index([userId])
+}
