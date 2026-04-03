@@ -1,0 +1,8 @@
+{
+  "name": "papana-root",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm install --prefix api && npm install --prefix web && npm run build --prefix web",
+    "start": "npm run start --prefix api"
+  }
+}
