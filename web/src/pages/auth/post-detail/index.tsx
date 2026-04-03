@@ -9,6 +9,59 @@ import { getComments, addComment, deleteComment as delComment } from "../../../c
 import { useAlert } from "../../../core/AlertContext";
 import { Dialog } from "../../../core/components/ui/Dialog";
 
+const PostDetailSkeleton = () => (
+  <div className="w-full max-w-2xl mx-auto pb-10">
+    <div className="inline-flex items-center text-sm font-bold text-black opacity-50 mb-4">&larr; Back to Feed</div>
+    <div className="bg-white border border-[#333333] animate-pulse">
+      <div className="p-4 md:p-5">
+        <div className="flex items-start mb-4">
+          <div className="w-10 h-10 border border-[#333333] bg-[#e0e0e0]" />
+          <div className="ml-3 mt-1 flex flex-col gap-2">
+            <div className="w-24 h-3 bg-[#e0e0e0]" />
+            <div className="w-16 h-2 bg-[#e0e0e0]" />
+          </div>
+        </div>
+        <div className="w-2/3 h-6 bg-[#e0e0e0] mb-4" />
+        <div className="flex flex-col gap-3">
+          <div className="w-full h-4 bg-[#e0e0e0]" />
+          <div className="w-full h-4 bg-[#e0e0e0]" />
+          <div className="w-5/6 h-4 bg-[#e0e0e0]" />
+          <div className="w-3/4 h-4 bg-[#e0e0e0]" />
+        </div>
+        <div className="mt-6 pt-3 border-t border-[#333333] flex justify-between">
+          <div className="w-16 h-3 bg-[#e0e0e0]" />
+          <div className="w-20 h-3 bg-[#e0e0e0]" />
+        </div>
+      </div>
+      <div className="border-t border-[#333333] flex px-1 py-1 gap-1">
+        <div className="flex-1 h-8 bg-[#f0f0f0] border border-[#333333]" />
+        <div className="flex-1 h-8 bg-[#f0f0f0] border border-[#333333]" />
+      </div>
+      <div className="p-4 md:p-5 border-t border-[#333333] bg-[#f9f9f9]">
+        <div className="flex gap-3 mb-6 items-start">
+          <div className="w-8 h-8 border border-[#333333] bg-[#e0e0e0]" />
+          <div className="flex-1 h-9 bg-white border border-[#333333]" />
+          <div className="w-16 h-9 bg-[#e0e0e0] border border-[#333333]" />
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
+            <div className="w-8 h-8 border border-[#333333] bg-[#e0e0e0]" />
+            <div className="flex-1">
+              <div className="w-48 h-10 bg-[#e0e0e0] border border-[#333333]" />
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <div className="w-8 h-8 border border-[#333333] bg-[#e0e0e0]" />
+            <div className="flex-1">
+              <div className="w-64 h-16 bg-[#e0e0e0] border border-[#333333]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -90,8 +143,8 @@ export const PostDetail = () => {
     }
   };
 
-  if (loading) return <div className="p-4 text-center text-gray-500">Loading post...</div>;
-  if (!post) return <div className="p-4 text-center text-gray-500">Post not found</div>;
+  if (loading) return <PostDetailSkeleton />;
+  if (!post) return <div className="p-4 text-center font-bold text-black border border-[#333333] bg-[#f0f0f0]">POST NOT FOUND</div>;
 
   const renderComments = (commentList: any[]) => {
     return commentList.map(c => (

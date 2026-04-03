@@ -7,6 +7,8 @@ import { getPosts } from "../../../core/services/post";
 import { toggleLike } from "../../../core/services/like";
 import { useAlert } from "../../../core/AlertContext";
 
+import { PostSkeleton } from "../../../core/components/ui/PostSkeleton";
+
 export const Profile = () => {
   const { user } = useAuth();
   const { showAlert } = useAlert();
@@ -103,7 +105,10 @@ export const Profile = () => {
       </div>
 
       {loading ? (
-        <div className="text-center font-bold py-10 opacity-50">LOADING...</div>
+        <div className="flex flex-col gap-6">
+          <PostSkeleton />
+          <PostSkeleton />
+        </div>
       ) : (
         <div className="flex flex-col gap-6">
           {posts.length === 0 ? (
