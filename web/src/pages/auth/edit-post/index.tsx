@@ -5,6 +5,7 @@ import "react-quill-new/dist/quill.snow.css";
 import { getPost, updatePost } from "../../../core/services/post";
 import { useAuth } from "../../../core/AuthProvider";
 import { useAlert } from "../../../core/AlertContext";
+import { Loader } from "../../../core/components/ui/Loader";
 
 export const EditPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -64,7 +65,7 @@ export const EditPost = () => {
   };
 
   if (initialLoading) {
-    return <div className="p-10 text-center text-black font-bold">Loading...</div>;
+    return <Loader fullScreen={false} />;
   }
 
   return (

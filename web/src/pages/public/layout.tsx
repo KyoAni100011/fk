@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from "react-router";
 import { useAuth } from "../../core/AuthProvider";
 import { CardLayout } from "../../core/components/CardLayout";
+import { Loader } from "../../core/components/ui/Loader";
 
 export const PublicLayout = () => {
   const { loading, user } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   if (user) return <Navigate to="/" replace />;
 

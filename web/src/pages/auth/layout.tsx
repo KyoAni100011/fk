@@ -1,10 +1,11 @@
 import { Navigate, Outlet, Link } from "react-router";
 import { useAuth } from "../../core/AuthProvider";
+import { Loader } from "../../core/components/ui/Loader";
 
 export const AuthLayout = () => {
   const { loading, user, logout } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   if (!user) return <Navigate to="/sign-in" replace />;
 
