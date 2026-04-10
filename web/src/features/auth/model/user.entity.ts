@@ -1,0 +1,1 @@
+export interface UserEntity { id: string; username: string; avatarUrl?: string; }
